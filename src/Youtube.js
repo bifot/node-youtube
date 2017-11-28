@@ -16,7 +16,7 @@ class Youtube {
         qs: {
           key,
           [ username ? 'forUsername' : 'id' ]: username ? username : channelId,
-          part
+          part: typeof part === 'object' ? part.join(',') : part
         },
         json: true
       })
@@ -24,6 +24,29 @@ class Youtube {
       const [ item ] = body.items
 
       return item
+    } catch (err) {
+      throw err
+    }
+  }
+
+  async getPlaylist (settings) {
+    const { baseUrl, key } = this
+    const { playlistId, part = 'id' } = settings
+
+    try {
+      const body = await rp({
+        baseUrl,
+        url: '/playlists',
+        qs: {
+          ...settings,
+          key,
+          id: playlistId,
+          part: typeof part === 'object' ? part.join(',') : part
+        },
+        json: true
+      })
+
+      return body
     } catch (err) {
       throw err
     }
