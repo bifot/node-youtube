@@ -6,7 +6,7 @@ const youtube = new Youtube(process.env.TOKEN)
 describe('test youtube', function () {
   this.timeout(5000)
 
-  it('get channel data by usernmae', async () => {
+  it('get channel data by username', async () => {
     const channel = await youtube.getChannel({
       username: 'streetcap1',
       part: 'contentDetails'
