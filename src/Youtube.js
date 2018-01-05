@@ -52,6 +52,29 @@ class Youtube {
     }
   }
 
+  async getPlaylistItems (settings) {
+    const { baseUrl, key } = this
+    const { playlistId, part = 'id' } = settings
+
+    try {
+      const body = await rp({
+        baseUrl,
+        url: '/playlistItems',
+        qs: {
+          ...settings,
+          key,
+          playlistId,
+          part: typeof part === 'object' ? part.join(',') : part
+        },
+        json: true
+      })
+
+      return body
+    } catch (err) {
+      throw err
+    }
+  }
+
   async getVideos (settings) {
     const { baseUrl, key } = this
     const { playlistId, part = 'id' } = settings
