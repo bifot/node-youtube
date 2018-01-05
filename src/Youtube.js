@@ -53,7 +53,7 @@ class Youtube {
   }
 
   async getVideos (settings) {
-    const { baseUrl, kye } = this
+    const { baseUrl, key } = this
     const { playlistId, part = 'id' } = settings
 
     try {
