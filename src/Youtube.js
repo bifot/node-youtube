@@ -51,6 +51,29 @@ class Youtube {
       throw err
     }
   }
+
+  async getVideos (settings) {
+    const { baseUrl, kye } = this
+    const { playlistId, part = 'id' } = settings
+
+    try {
+      const body = await rp({
+        baseUrl,
+        url: '/videos',
+        qs: {
+          ...settings,
+          key,
+          id: playlistId,
+          part: typeof part === 'object' ? part.join(',') : part
+        },
+        json: true
+      })
+
+      return body
+    } catch (err) {
+      throw err
+    }
+  }
 }
 
 module.exports = Youtube
